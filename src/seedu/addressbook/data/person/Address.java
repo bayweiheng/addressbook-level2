@@ -21,7 +21,6 @@ public class Address {
     private final Street street;
     private final Unit unit;
     private final PostalCode postalCode;
-    public final String value;
 
     private boolean isPrivate;
 
@@ -41,7 +40,6 @@ public class Address {
         street = new Street(components[1]);
         unit = new Unit(components[2]);
         postalCode = new PostalCode(components[3]);
-        value = trimmedAddress;
     }
 
     /**
@@ -63,14 +61,17 @@ public class Address {
 
     @Override
     public String toString() {
-        return value;
+        return block.toString() + ","
+                + street.toString() + ","
+                + unit.toString() + ","
+                + postalCode.toString();
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Address // instanceof handles nulls
-                && this.value.equals(((Address) other).value)); // state check
+                && this.toString().equals(((Address) other).toString())); // state check
     }
 
     @Override
