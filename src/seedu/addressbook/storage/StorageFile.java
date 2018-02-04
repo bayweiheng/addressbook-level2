@@ -29,6 +29,9 @@ public class StorageFile {
     /** Default file path used if the user doesn't provide the file name. */
     public static final String DEFAULT_STORAGE_FILEPATH = "addressbook.xml";
 
+    /***/
+    private static final String MESSAGE_CANNOT_WRITE_TO_FILE = "\nPlease ensure write permissions are set.";
+
     /* Note: Note the use of nested classes below.
      * More info https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html
      */
@@ -49,6 +52,12 @@ public class StorageFile {
     public static class StorageOperationException extends Exception {
         public StorageOperationException(String message) {
             super(message);
+        }
+    }
+
+    public static class StorageReadOnlyException extends StorageOperationException {
+        public StorageReadOnlyException(String message) {
+            super(message + MESSAGE_CANNOT_WRITE_TO_FILE);
         }
     }
 
@@ -106,7 +115,7 @@ public class StorageFile {
             marshaller.marshal(toSave, fileWriter);
 
         } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path);
+            throw new StorageReadOnlyException("Error writing to file: " + path);
         } catch (JAXBException jaxbe) {
             throw new StorageOperationException("Error converting address book into storage format");
         }
@@ -138,9 +147,9 @@ public class StorageFile {
 
         } catch (FileNotFoundException fnfe) {
             throw new AssertionError("A non-existent file scenario is already handled earlier.");
-        // other errors
+            // other errors
         } catch (IOException ioe) {
-            throw new StorageOperationException("Error writing to file: " + path);
+            throw new StorageReadOnlyException("Error writing to file: " + path);
         } catch (JAXBException jaxbe) {
             throw new StorageOperationException("Error parsing file data format");
         } catch (IllegalValueException ive) {
