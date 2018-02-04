@@ -1,6 +1,10 @@
 package seedu.addressbook.data.person;
 
 import seedu.addressbook.data.exception.IllegalValueException;
+import seedu.addressbook.data.person.address.Block;
+import seedu.addressbook.data.person.address.Street;
+import seedu.addressbook.data.person.address.Unit;
+import seedu.addressbook.data.person.address.PostalCode;
 
 /**
  * Represents a Person's address in the address book.
@@ -13,7 +17,12 @@ public class Address {
             + "BLOCK, STREET, UNIT, POSTAL_CODE";
     public static final String ADDRESS_VALIDATION_REGEX = ".+,.+,.+,.+";
 
+    private final Block block;
+    private final Street street;
+    private final Unit unit;
+    private final PostalCode postalCode;
     public final String value;
+
     private boolean isPrivate;
 
     /**
@@ -27,7 +36,22 @@ public class Address {
         if (!isValidAddress(trimmedAddress)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
-        this.value = trimmedAddress;
+        String[] components = getAddressComponents(trimmedAddress);
+        block = new Block(components[0]);
+        street = new Street(components[1]);
+        unit = new Unit(components[2]);
+        postalCode = new PostalCode(components[3]);
+        value = trimmedAddress;
+    }
+
+    /**
+     * Splits a trimmed address into its STRING components: Block, Street, Unit, Postal Code
+     * in that order. Additional components after the four mentioned above are automatically
+     * discarded.
+     */
+    public String[] getAddressComponents(String trimmedAddress) {
+        String[] components = trimmedAddress.split(",");
+        return components;
     }
 
     /**
@@ -51,7 +75,7 @@ public class Address {
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return toString().hashCode();
     }
 
     public boolean isPrivate() {
