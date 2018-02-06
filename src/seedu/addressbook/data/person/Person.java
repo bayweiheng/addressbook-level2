@@ -10,10 +10,20 @@ import java.util.Objects;
  */
 public class Person implements ReadOnlyPerson {
 
+    /**
+     * Used to assign sequence numbers to newly created persons
+     */
+    private static int nextSequenceNumber = 0;
+
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+
+    /**
+     * Each person has a unique sequence number that indicates the order they were created in
+     */
+    private final int sequenceNumber;
 
     private final UniqueTagList tags;
     /**
@@ -25,6 +35,8 @@ public class Person implements ReadOnlyPerson {
         this.email = email;
         this.address = address;
         this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
+        nextSequenceNumber++;
+        sequenceNumber = nextSequenceNumber;
     }
 
     /**
