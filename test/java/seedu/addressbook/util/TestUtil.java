@@ -118,6 +118,17 @@ public class TestUtil {
         }
     }
 
+
+    public static Person generateTestPerson(String name) {
+        try {
+            return new Person(new Name(name), new Phone(Phone.EXAMPLE, false),
+                    new Email(Email.EXAMPLE, true), new Address(Address.EXAMPLE, false), new UniqueTagList());
+        } catch (IllegalValueException e) {
+            fail("test person data should be valid by definition");
+            return null;
+        }
+    }
+
     public static UniqueTagList getAllTags(UniquePersonList persons) {
         Set<Tag> combinedTagList = new HashSet<Tag>();
 

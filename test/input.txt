@@ -149,6 +149,18 @@
   list
 
 ##########################################################
+# test sort command
+##########################################################
+
+  add Charlie Dickson pp/333333 e/charlie.d@nus.edu.sg a/333, gamma street t/friends t/school
+  add betsy Choo pp/222222 pe/benchoo@nus.edu.sg pa/222, beta street t/secretive
+  add Adam Brown p/111111 e/adam@gmail.com a/111, alpha street
+
+  # should now be in sorted order
+  sort
+  list
+
+##########################################################
 # test exit command
 ##########################################################
 
