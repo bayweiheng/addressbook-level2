@@ -147,5 +147,5 @@ public class UniquePersonList implements Iterable<Person> {
     public void sortByName() {
         Collections.sort(internalList);
     }
-    
+
 }

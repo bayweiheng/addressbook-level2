@@ -37,7 +37,7 @@ public class Name implements Comparable<Name> {
     }
 
     /**
-     * Retrieves a listing of every word in the name, in order.
+     * Retrieves a listing of every word in the name, in order. Converts all words to lower case.
      */
     public List<String> getWordsInName() {
         return Arrays.asList(fullName.split("\\s+"));
